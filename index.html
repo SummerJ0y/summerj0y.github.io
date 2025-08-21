@@ -247,7 +247,6 @@
 <style>
   :root { --life:#ffffff; --work:#000000; }
 
-   
   body.home-no-chrome header,
   body.home-no-chrome .site-header,
   body.home-no-chrome nav.site-nav,
@@ -256,10 +255,9 @@
   body.home-no-chrome main,
   body.home-no-chrome .container { max-width:none !important; padding:0 !important; margin:0 !important; }
 
-   
   #taiji {
     position:fixed; left:50%; top:50%;
-    width:calc(100vmin * 1.35); height:calc(100vmin * 1.35);  
+    width:calc(100vmin * 1.35); height:calc(100vmin * 1.35);
     --tx:-50%;
     --ty:-50%;
     --rot:0deg;
@@ -270,20 +268,26 @@
     z-index:2;
     display:block;
   }
-   
   #taiji.full {
     --tx:-50%;
     --ty:-50%;
-    --scale:calc(1 / 1.35);  
+    --scale:calc(1 / 1.35);
   }
 
-   
   .shape { cursor:pointer; }
+  .eye {
+    pointer-events: none;
+    opacity: 1;  
+    transition: opacity .2s ease;  
+  }
 
-   
-  .eye { pointer-events:none; }
+  #left-group:hover  #eye-black,
+  #left-group:focus-within #eye-black,
+  #right-group:hover #eye-white,
+  #right-group:focus-within #eye-white {
+    opacity: 0;
+  }
 
-   
   .wipe {
     position:fixed; inset:0; z-index:5; background:transparent;
     transform:scaleX(0); transform-origin:left;
@@ -294,10 +298,37 @@
   .wipe.animating  { transform:scaleX(1); }
 
   body.home-no-chrome {
-  background-color: #d6d8db;
-  background-image:
-    radial-gradient(120vmax 90vmax at 50% 35%, #e5e6e8 0%, #d6d8db 55%, #c6c8cc 100%);
-}
+    background-color: #d6d8db;
+    background-image:
+      radial-gradient(120vmax 90vmax at 50% 35%, #e5e6e8 0%, #d6d8db 55%, #c6c8cc 100%);
+  }
+
+   
+  .upright {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transform: rotate(calc(-1 * var(--rot)));
+    transition: transform .7s cubic-bezier(.4,0,.2,1);
+  }
+
+   
+  .label {
+    opacity: 0;
+    pointer-events: none;
+    font-weight: 700;
+    letter-spacing: .06em;
+    transition: opacity .25s ease;
+  }
+  #left-group:hover  .label,
+  #left-group:focus-within  .label,
+  #right-group:hover .label,
+  #right-group:focus-within .label {
+    opacity: 1;
+  }
+
+  .label-life { fill: #000; font-size: 9.5vmin; }
+  .label-work { fill: #fff; font-size: 9.5vmin; }
+
 </style>
 
 <link rel="prefetch" href="/life/">
@@ -313,42 +344,35 @@
     const right= document.getElementById('work-shape');
     const eyeW = document.getElementById('eye-white');
     const eyeB = document.getElementById('eye-black');
-    const wipe = document.querySelector('.wipe');
 
-    
     function drawTaiji() {
-      
       const rect = svg.getBoundingClientRect();
-      const D = Math.min(rect.width, rect.height);    
+      const D = Math.min(rect.width, rect.height);
       const cx = D/2, cy = D/2;
-      const R  = D/2;                                 
-      const r  = R/2;                                 
-      const re = R/8;                                 
+      const R  = D/2;
+      const r  = R/2;
+      const re = R/8;
 
-      
       svg.setAttribute('viewBox', `0 0 ${D} ${D}`);
 
-      
       const dL = [
         `M ${cx},${cy - R}`,
-        `A ${R},${R} 0 0 0 ${cx},${cy + R}`,          
-        `A ${r},${r} 0 0 0 ${cx},${cy}`,              
-        `A ${r},${r} 0 0 0 ${cx},${cy - R}`,          
+        `A ${R},${R} 0 0 0 ${cx},${cy + R}`,
+        `A ${r},${r} 0 0 0 ${cx},${cy}`,
+        `A ${r},${r} 0 0 0 ${cx},${cy - R}`,
         'Z'
       ].join(' ');
       left.setAttribute('d', dL);
 
-      
       const dR = [
         `M ${cx},${cy - R}`,
-        `A ${R},${R} 0 0 1 ${cx},${cy + R}`,          
-        `A ${r},${r} 0 0 1 ${cx},${cy}`,              
-        `A ${r},${r} 0 0 0 ${cx},${cy - R}`,          
+        `A ${R},${R} 0 0 1 ${cx},${cy + R}`,
+        `A ${r},${r} 0 0 1 ${cx},${cy}`,
+        `A ${r},${r} 0 0 0 ${cx},${cy - R}`,
         'Z'
       ].join(' ');
       right.setAttribute('d', dR);
 
-      
       eyeB.setAttribute('cx', cx);
       eyeB.setAttribute('cy', cy - r);
       eyeB.setAttribute('r',  re);
@@ -358,31 +382,31 @@
       eyeW.setAttribute('r',  re);
     }
 
-    
     ['/life/','/work/'].forEach(u => fetch(u, {mode:'same-origin'}).catch(()=>{}));
 
-    const FIT_DURATION = 700;   
-    const WIPE_DURATION = 550;  
+    const FIT_DURATION = 700;
 
     function go(side, url) {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         window.location.assign(url); return;
       }
-      
       svg.style.setProperty('--rot', side === 'left' ? '-180deg' : '180deg');
-      svg.classList.add('full');              
-
-        setTimeout(() => {
+      svg.classList.add('full');
+      setTimeout(() => {
         window.location.assign(url);
-        }, FIT_DURATION + 60);
+      }, FIT_DURATION + 60);
     }
 
-    left.addEventListener('click',  () => go('left',  '/life/'));
-    right.addEventListener('click', () => go('right', '/work/'));
+    document.getElementById('left-group')
+      .addEventListener('click', () => go('left', '/life/'));
+    document.getElementById('right-group')
+      .addEventListener('click', () => go('right', '/work/'));
 
-    
     drawTaiji();
-    let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(drawTaiji, 80); }, { passive:true });
+    let t; window.addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(drawTaiji, 80);
+    }, { passive:true });
   }
 
   if (document.readyState === 'loading') {
@@ -393,18 +417,21 @@
 })();
 </script>
 
-
 <div class="wipe" aria-hidden="true"></div>
 
-
 <svg id="taiji" role="img" aria-label="Work–Life Taiji">
-  
-  <path id="life-shape" class="shape" fill="var(--life)" d=""/>
-  
-  <path id="work-shape" class="shape" fill="var(--work)" d=""/>
-  
-  <circle id="eye-black" class="eye" fill="#000" r="0"/>
-  <circle id="eye-white" class="eye" fill="#fff" r="0"/>
+  <g id="left-group" tabindex="0" aria-label="Life">
+    <path id="life-shape" class="shape" fill="var(--life)" d=""/>
+    <circle id="eye-black" class="eye" fill="#000" r="0"/>
+    <text x="50%" y="25%" text-anchor="middle" dominant-baseline="middle"
+      class="label label-life upright">LIFE</text>
+  </g>
+  <g id="right-group" tabindex="0" aria-label="Work">
+    <path id="work-shape" class="shape" fill="var(--work)" d=""/>
+    <circle id="eye-white" class="eye" fill="#fff" r="0"/>
+    <text x="50%" y="75%" text-anchor="middle" dominant-baseline="middle"
+      class="label label-work upright">WORK</text>
+  </g>
 </svg>
 
       </main>
