@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Summer Joy</title>
-    <link>//localhost:1313/life/</link>
+    <link>/life/</link>
     <description>Recent content on Summer Joy</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <atom:link href="//localhost:1313/life/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/life/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
