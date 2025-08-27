@@ -93,5 +93,73 @@
   
   /* 可选：居中卡片 */
   .ig-center { margin-left: auto; margin-right: auto; }
+
+
+  /* from here */
+  /* ===== Life 首屏 Hero ===== */
+.life-hero{
+    margin: 0 0 1.2rem;
+    padding: 1.2rem 1.2rem 1.1rem;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f9f0ff 0%, #eef4ff 100%);
+    box-shadow:
+      0 8px 16px rgba(0,0,0,0.06),
+      0 0 24px rgba(180,150,255,0.18);
+  }
+  .life-hero__title{
+    margin: 0 0 .2rem;
+    font-size: clamp(2rem, 4vw, 2.4rem);   /* 比主题默认更醒目 */
+    line-height: 1.15;
+  }
+  .life-hero__lead{
+    margin: 0 0 .4rem;
+    font-size: clamp(1.05rem, 2.4vw, 1.2rem); /* 副标题稍大 */
+    color: #5a4fb0;
+    font-weight: 600;
+  }
+  .life-hero__desc{
+    margin: 0;
+    font-size: 1.05rem;
+    color: #444;
+  }
+  
+  /* ===== 正文排版微调：更紧凑、更有重点 ===== */
+  /* 整体文字稍微放大一点（不至于影响全站），仅对文章主体生效 */
+  .prose { font-size: 1.04rem; line-height: 1.78; }
+  
+  /* 二级标题更有存在感，减少大空隙 */
+  .prose h2{
+    font-size: 1.55rem;
+    line-height: 1.25;
+    font-weight: 800;
+    margin-top: 1.8rem;    /* 默认太大，这里略收紧 */
+    margin-bottom: .6rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  
+  /* 正文段落的上边距略收紧，让页面更“满” */
+  .prose p { margin-top: .5rem; margin-bottom: .75rem; }
+  
+  /* 章节分隔横线更轻一点，不要显得断层 */
+  .prose hr { border-color: rgba(0,0,0,.06); margin: 1.4rem 0; }
+  
+  /* figure 统一做成圆角+阴影，与卡片风格一致 */
+  .prose figure img{
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  }
+  
+  /* 你的魔法 Q&A 卡片与正文的间距优化 */
+  .qa-card { margin: 1rem 0 1.1rem; }
+  .qa-question { font-size: 1.06rem; }
+  
+  /* 小屏兼容：缩小首屏的内边距，避免挤压 */
+  @media (max-width: 600px){
+    .life-hero{ padding: .9rem .9rem .85rem; }
+    .life-hero__title{ font-size: 1.9rem; }
+  }
+  
   
   
