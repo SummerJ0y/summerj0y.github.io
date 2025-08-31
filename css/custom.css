@@ -264,4 +264,106 @@ html[data-theme="dark"] {
   }
   
   
-  
+/* ---------- Intro block v2 ---------- */
+#intro-slot {
+  position: fixed;
+  left: 8vw;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 34vw;
+  z-index: 1;
+  color: var(--work);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+#intro-slot .name {
+  margin: 0 0 .45em 0;
+  line-height: 1.06;
+  letter-spacing: .2px;
+  font-weight: 800;
+  font-size: clamp(32px, 5.2vmin, 56px);
+}
+#intro-slot .name .zh { font-weight: 800; margin-right: .35ch; }
+#intro-slot .name .en { font-weight: 800; }
+#intro-slot .name .aka {
+  display: inline-block;
+  margin-left: .6ch;
+  font-size: .72em;              /* 放大 Joy Summer */
+  font-weight: 700;
+  color: var(--work);
+  background: color-mix(in oklab, var(--life) 70%, white);
+  padding: .28em .72em;
+  border-radius: 999px;
+  vertical-align: .22em;
+  opacity: .95;
+}
+
+#intro-slot .tagline {
+  margin: 0;
+  font-size: clamp(14px, 1.9vmin, 18px);
+  color: color-mix(in oklab, var(--work) 60%, #000 0%);
+  opacity: .9;
+}
+#intro-slot .edu {
+  margin: .35em 0 0 0;
+  font-size: clamp(13px, 1.7vmin, 16px);
+  color: #5f5f69;
+}
+#intro-slot .meta {
+  margin: .2em 0 1.1em 0;
+  font-size: clamp(12px, 1.6vmin, 15px);
+  color: #777884;
+}
+
+/* 一排胶囊链接 */
+#intro-slot .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem .7rem;
+  margin-bottom: .9rem;
+}
+#intro-slot .chip {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  padding: .56rem .9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: clamp(13px, 1.65vmin, 15px);
+  color: var(--work);
+  background: #fff;
+  border: 1px solid color-mix(in oklab, var(--work) 22%, #000 0%);
+  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  transition: transform .15s ease, border-color .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+#intro-slot .chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--work);
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+#intro-slot .chip.primary {
+  color: #fff;
+  background: var(--work);
+  border-color: var(--work);
+}
+#intro-slot .chip.primary:hover {
+  background: color-mix(in oklab, var(--work) 92%, black 8%);
+}
+
+#intro-slot .hint {
+  margin: .2rem 0 0 0;
+  font-size: clamp(12px, 1.5vmin, 14px);
+  color: #8b8c97;
+}
+
+/* 小屏：把 intro 移到上方，避免和太极重叠 */
+@media (max-width: 720px) {
+  #intro-slot {
+    position: absolute;
+    left: 6vw;
+    top: 8vh;
+    transform: none;
+    max-width: 88vw;
+    z-index: 3;
+  }
+}
